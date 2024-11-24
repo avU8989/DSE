@@ -1,0 +1,417 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Meeting Scheduler API",
+    "description": "API for scheduling and managing meetings with multiple proposed time slots.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api"
+    }
+  ],
+  "paths": {
+    "/meetings": {
+      "post": {
+        "summary": "Create a new meeting",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Meeting"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Meeting created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Meeting"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error during creating Meeting"
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve all meeting schedules",
+        "responses": {
+          "200": {
+            "description": "Fetching all meetings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Meeting"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}": {
+      "get": {
+        "summary": "Get a specific meeting",
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Details of a specific meeting",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Meeting"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Meeting not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a specific meeting",
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Meeting"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Meeting updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Meeting"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Meeting not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific meeting",
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Meeting deleted successfully"
+          },
+          "404": {
+            "description": "Meeting not found"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/slots": {
+      "post": {
+        "summary": "Add a new time slot to a specific meeting",
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Timeslot"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Time slot added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timeslot"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Meeting not found"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/slots/{slotId}": {
+      "delete": {
+        "summary": "Delete a specific time slot from a meeting",
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slotId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Time slot deleted successfully"
+          },
+          "404": {
+            "description": "Meeting or time slot not found"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/attendance": {
+      "post": {
+        "summary": "Submit a response for a meeting",
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Attendee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Attendance submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attendee"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Meeting not found"
+          }
+        }
+      }
+    },
+    "/meetings/{meetingId}/responses": {
+      "get": {
+        "summary": "Get all attendances for a meeting",
+        "parameters": [
+          {
+            "name": "meetingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all attendances",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Attendee"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Meeting not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Meeting": {
+        "type": "object",
+        "required": [
+          "scheduleName",
+          "creator",
+          "created",
+          "validUntil"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "scheduleName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timeslots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Timeslot"
+            }
+          },
+          "responses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attendee"
+            }
+          }
+        }
+      },
+      "Timeslot": {
+        "type": "object",
+        "required": [
+          "start",
+          "end"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Attendee": {
+        "type": "object",
+        "required": [
+          "person",
+          "availabilities"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "person": {
+            "type": "object",
+            "required": [
+              "name",
+              "email"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              }
+            }
+          },
+          "availabilities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "slotId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "availability": {
+                  "type": "string",
+                  "enum": [
+                    "yes",
+                    "no",
+                    "maybe"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

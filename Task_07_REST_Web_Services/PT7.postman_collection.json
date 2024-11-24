@@ -1,0 +1,259 @@
+{
+	"info": {
+		"_postman_id": "fa164eee-5663-4a76-b402-d18af3f72f2b",
+		"name": "PT7",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35142892"
+	},
+	"item": [
+		{
+			"name": "Create a meeting",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\r\n    \"scheduleName\": \"Team Meeting\",\r\n    \"description\": \"Discussion on project milestones\",\r\n    \"creator\": \"John Doe\",\r\n    \"created\": \"2024-06-07T10:15:30\",\r\n    \"validUntil\": \"2024-06-10T10:15:30\",\r\n    \"timeslots\": [\r\n        {\r\n            \"id\": \"123e4567-e89b-12d3-a456-426614174001\",\r\n            \"start\": \"2024-06-08T10:00:00\",\r\n            \"end\": \"2024-06-08T11:00:00\"\r\n        },\r\n        {\r\n            \"id\": \"123e4567-e89b-12d3-a456-426614174002\",\r\n            \"start\": \"2024-06-09T14:00:00\",\r\n            \"end\": \"2024-06-09T15:00:00\"\r\n        }\r\n    ],\r\n    \"responses\": []\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/meetings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"meetings"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all meetings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/meetings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"meetings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a specific meeting",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/meetings/123e4567-e89b-12d3-a456-426614174000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"meetings",
+						"123e4567-e89b-12d3-a456-426614174000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a meeting",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/meetings/123e4567-e89b-12d3-a456-426614174000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"meetings",
+						"123e4567-e89b-12d3-a456-426614174000"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "123e4567-e89b-12d3-a456-426614174000",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a meeting",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"scheduleName\": \"Updated Team Meeting\",\r\n  \"description\": \"Updated discussion on project milestones\",\r\n  \"creator\": \"Jane Doe\",\r\n  \"created\": \"2024-06-07T10:15:30\",\r\n  \"validUntil\": \"2024-06-10T10:15:30\",\r\n  \"timeslots\": [\r\n    {\r\n      \"id\": \"123e4567-e89b-12d3-a456-426614174001\",\r\n      \"start\": \"2024-06-08T12:00:00\",\r\n      \"end\": \"2024-06-08T13:00:00\"\r\n    },\r\n    {\r\n      \"id\": \"123e4567-e89b-12d3-a456-426614174002\",\r\n      \"start\": \"2024-06-09T16:00:00\",\r\n      \"end\": \"2024-06-09T17:00:00\"\r\n    }\r\n  ],\r\n  \"responses\": []\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/meetings/123e4567-e89b-12d3-a456-426614174000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"meetings",
+						"123e4567-e89b-12d3-a456-426614174000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Submit Attendance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"123e4567-e89b-12d3-a456-436614174001\",\r\n  \"person\": {\r\n    \"id\": \"456e4567-e89b-12d3-a456-426614174002\",\r\n    \"name\": \"Anna Smith\",\r\n    \"email\": \"john.smith@example.com\"\r\n  },\r\n  \"availabilities\": [\r\n    {\r\n  \"slotId\": \"c56a4180-65aa-42ec-a945-5fd21dec0539\",\r\n  \"availability\": \"yes\",\r\n  \"timeslotId\": \"123e4567-e89b-12d3-a456-426614174001\"\r\n}\r\n\r\n  ],\r\n  \"meetings\": []\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/meetings/123e4567-e89b-12d3-a456-426614174000/attendance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meetings",
+						"123e4567-e89b-12d3-a456-426614174000",
+						"attendance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch all Attendances With Meeting Details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fields\": {\r\n    \"id\": true,\r\n    \"scheduleName\": true,\r\n    \"creator\": true,\r\n    \"timeslots\": true,\r\n    \"responses\": true\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/meetings/123e4567-e89b-12d3-a456-426614174000/responses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"meetings",
+						"123e4567-e89b-12d3-a456-426614174000",
+						"responses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Timeslots",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/timeslots?timeslotId=123e4567-e89b-12d3-a456-426614174001\n",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"timeslots"
+					],
+					"query": [
+						{
+							"key": "timeslotId",
+							"value": "123e4567-e89b-12d3-a456-426614174001\n"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

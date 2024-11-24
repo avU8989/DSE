@@ -1,0 +1,350 @@
+openapi: 3.0.1
+info:
+  description: API for scheduling and managing meetings with multiple proposed time
+    slots.
+  title: Meeting Scheduler API
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/api
+paths:
+  /meetings:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Meeting'
+                type: array
+          description: Fetching all meetings
+      summary: Retrieve all meeting schedules
+      x-accepts: application/json
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meeting'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meeting'
+          description: Meeting created
+        "400":
+          description: Error during creating Meeting
+      summary: Create a new meeting
+      x-content-type: application/json
+      x-accepts: application/json
+  /meetings/{meetingId}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: meetingId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: Meeting deleted successfully
+        "404":
+          description: Meeting not found
+      summary: Delete a specific meeting
+      x-accepts: application/json
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: meetingId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meeting'
+          description: Details of a specific meeting
+        "404":
+          description: Meeting not found
+      summary: Get a specific meeting
+      x-accepts: application/json
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: meetingId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Meeting'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meeting'
+          description: Meeting updated successfully
+        "404":
+          description: Meeting not found
+      summary: Update a specific meeting
+      x-content-type: application/json
+      x-accepts: application/json
+  /meetings/{meetingId}/slots:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: meetingId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Timeslot'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timeslot'
+          description: Time slot added successfully
+        "404":
+          description: Meeting not found
+      summary: Add a new time slot to a specific meeting
+      x-content-type: application/json
+      x-accepts: application/json
+  /meetings/{meetingId}/slots/{slotId}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: meetingId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: slotId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: Time slot deleted successfully
+        "404":
+          description: Meeting or time slot not found
+      summary: Delete a specific time slot from a meeting
+      x-accepts: application/json
+  /meetings/{meetingId}/attendance:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: meetingId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Attendee'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendee'
+          description: Attendance submitted successfully
+        "404":
+          description: Meeting not found
+      summary: Submit a response for a meeting
+      x-content-type: application/json
+      x-accepts: application/json
+  /meetings/{meetingId}/responses:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: meetingId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Attendee'
+                type: array
+          description: List of all attendances
+        "404":
+          description: Meeting not found
+      summary: Get all attendances for a meeting
+      x-accepts: application/json
+components:
+  schemas:
+    Meeting:
+      example:
+        scheduleName: scheduleName
+        creator: creator
+        created: 2000-01-23T04:56:07.000+00:00
+        description: description
+        validUntil: 2000-01-23T04:56:07.000+00:00
+        responses:
+        - person:
+            name: name
+            email: email
+          availabilities:
+          - slotId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            availability: "true"
+          - slotId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            availability: "true"
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - person:
+            name: name
+            email: email
+          availabilities:
+          - slotId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            availability: "true"
+          - slotId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            availability: "true"
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        timeslots:
+        - start: 2000-01-23T04:56:07.000+00:00
+          end: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - start: 2000-01-23T04:56:07.000+00:00
+          end: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        scheduleName:
+          type: string
+        description:
+          type: string
+        creator:
+          type: string
+        created:
+          format: date-time
+          type: string
+        validUntil:
+          format: date-time
+          type: string
+        timeslots:
+          items:
+            $ref: '#/components/schemas/Timeslot'
+          type: array
+        responses:
+          items:
+            $ref: '#/components/schemas/Attendee'
+          type: array
+      required:
+      - created
+      - creator
+      - scheduleName
+      - validUntil
+      type: object
+    Timeslot:
+      example:
+        start: 2000-01-23T04:56:07.000+00:00
+        end: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+      required:
+      - end
+      - start
+      type: object
+    Attendee:
+      example:
+        person:
+          name: name
+          email: email
+        availabilities:
+        - slotId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          availability: "true"
+        - slotId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          availability: "true"
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        person:
+          $ref: '#/components/schemas/Attendee_person'
+        availabilities:
+          items:
+            $ref: '#/components/schemas/Attendee_availabilities_inner'
+          type: array
+      required:
+      - availabilities
+      - person
+      type: object
+    Attendee_person:
+      example:
+        name: name
+        email: email
+      properties:
+        name:
+          type: string
+        email:
+          format: email
+          type: string
+      required:
+      - email
+      - name
+      type: object
+    Attendee_availabilities_inner:
+      example:
+        slotId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        availability: "true"
+      properties:
+        slotId:
+          format: uuid
+          type: string
+        availability:
+          enum:
+          - "true"
+          - "false"
+          - maybe
+          type: string
+      type: object
